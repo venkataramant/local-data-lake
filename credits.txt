@@ -1,0 +1,2 @@
+1. Original from https://github.com/hnawaz007/pythondataanalysis
+2. Replaced with Apache/Hive image and MySQL
