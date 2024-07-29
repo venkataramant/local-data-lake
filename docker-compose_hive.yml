@@ -1,0 +1,115 @@
+version: '3.7'
+services:
+
+  mysql_host:
+    hostname: mysql.tvr.local
+    image: mysql:9.0.0
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: admiN123Pass
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: admiN123Pass
+      MYSQL_DATABASE: metastore_db
+    networks:
+      - trino-network
+    volumes:
+      - mysql_data_dir:/var/lib/mysql
+
+  hive-metastore:
+    hostname: hive.metastore.tvr.local
+    image: 'apache/hive:4.0.0'
+
+    platform: linux/arm64 
+    ports:
+      - '9083:9083' # Metastore Thrift
+    volumes:
+      #- ./conf/metastore-site.xml:/opt/apache-hive-metastore-3.0.0-bin/conf/metastore-site.xml:ro
+      # - hive-data:/opt/hive
+      - ./conf/hive-site.xml:/opt/hive/conf/hive-site.xml
+      - ./conf/metastore-site.xml:/opt/hive/conf/metastore-site.xml
+      - ./conf/core-site.xml:/opt/hive/conf/core-site.xml
+      #- ./libs/hadoop-aws-3.4.0.jar:/opt/hive/lib/hadoop-aws.jar
+      #- ./lib/aws-java-sdk-bundle-1.12.761.jar:/opt/hive/lib/aws-java-sdk-bundle.jar
+      #- ./lib/mysql-connector-j-9.0.0.jar:/opt/hive/lib/mysql-connector-j-9.0.0.jar
+      - ./lib/hive_aux_jars/mysql-connector-j-9.0.0.jar:/opt/hive/lib/mysql-connector-j-9.0.0.jar
+      - ./lib/hive_aux_jars:/opt/hive/hive_aux_jars 
+    environment:
+      SERVICE_NAME: metastore
+      DB_DRIVER: mysql
+      METASTORE_DB_HOSTNAME: mysql.tvr.local
+      HIVE_METASTORE_USER: admin
+      HIVE_METASTORE_PASSWORD: admiN123Pass
+      HIVE_METASTORE_JDBC_URL: jdbc:mysql://mysql.tvr.local/metastore_db
+      # HADOOP_CONF_DIR: /opt/hive/conf
+      HIVE_METASTORE_WAREHOUSE_DIR: s3a://hive/warehouse
+      HIVE_AUX_JARS_PATH: "/opt/hive/hive_aux_jars/"
+      #AUX_CLASSPATH: "/opt/hive/hive_aux_jars/*"
+#      AUX_CLASSPATH: "/opt/hive/hive_aux_jars/identity-spi-2.26.21.jar,/opt/hive/hive_aux_jars/auth-2.26.21.jar,/opt/hive/hive_aux_jars/aws-java-sdk-bundle-1.12.762.jar,/opt/hive/hive_aux_jars/aws-java-sdk-s3-1.12.762.jar,/opt/hive/hive_aux_jars/hadoop-aws-3.4.0.jar,/opt/hive/hive_aux_jars/mysql-connector-j-9.0.0.jar,/opt/hive/hive_aux_jars/s3-2.20.83.jar"
+    networks:
+      - trino-network
+    deploy:
+      resources:
+        reservations:
+          cpus: 1.0
+          memory: 1280M
+    depends_on:
+      - mysql_host
+  hive-server2:
+    image: apache/hive:4.0.0
+    hostname: hive-server2.metastore.tvr.local
+    build: hive_build
+    platform: linux/arm64 
+    environment:
+      SERVICE_NAME: hiveserver2
+      DB_DRIVER: mysql
+      # HADOOP_CONF_DIR: /opt/hive/conf
+      HIVE_METASTORE_URI: thrift://hive.metastore.tvr.local:9083
+      HIVE_METASTORE_JDBC_URL: jdbc:mysql://mysql.tvr.local/metastore_db
+      METASTORE_DB_HOSTNAME: mysql.tvr.local
+      HIVE_METASTORE_USER: admin
+      HIVE_METASTORE_PASSWORD: admiN123Pass
+      #AUX_CLASSPATH: /opt/hive/hive_aux_jars
+      HIVE_AUX_JARS_PATH: "/opt/hive/hive_aux_jars/"
+      VERBOSE: true
+      VERBOSE_MODE: "--verbose"
+      SERVICE_OPTS: "-Dhive.metastore.uris=thrift://hive.metastore.tvr.local:9083 -Dhive.log.level=TRACE -Djavax.jdo.option.ConnectionDriverName=com.mysql.cj.jdbc.Driver -Djavax.jdo.option.ConnectionURL=jdbc:mysql://mysql.tvr.local/metastore_db -Djavax.jdo.option.ConnectionUserName=admin -Djavax.jdo.option.ConnectionPassword=admiN123Pass" 
+    depends_on:
+      - hive-metastore
+    ports:
+      - "10000:10000"
+      - "10001:10001"
+      - "10002:1002"
+    deploy:
+      resources:
+        reservations:
+          cpus: 1.0
+          memory: 2048M
+  
+    volumes:
+#      - hive-data:/opt/hive
+      - ./conf/hive-site.xml:/opt/hive/conf/hive-site.xml
+      - ./conf/core-site.xml:/opt/hive/conf/core-site.xml
+      - ./conf/hive-log4j2.properties:/opt/hive/conf/hive-log4j2.properties 
+      # - ./conf/metastore-site.xml:/opt/hive/conf/metastore-site.xml
+      - ./lib/hive_aux_jars/mysql-connector-j-9.0.0.jar:/opt/hive/lib/mysql-connector-j-9.0.0.jar
+      #- ./lib/hive_aux_jars/hadoop-aws-3.4.0.jar:/opt/hive/lib/hadoop-aws-3.4.0.jar
+      #- ./lib/hive_aux_jars/aws-java-sdk-bundle-1.12.761.jar:/opt/hive/lib/aws-java-sdk-bundle-1.12.761.jar
+      - ./lib/hive_aux_jars:/opt/hive/hive_aux_jars
+      - ./hivesever2_logs:/tmp/hive
+       - ./hivesever2_logs2:/tmp/root
+    networks:
+      - trino-network
+
+volumes:
+  minio-data:
+    external: true
+#    driver: local
+  hive-data:
+    external: true
+  mysql_data_dir:
+    external: true
+
+networks:
+  trino-network:
+    external: true

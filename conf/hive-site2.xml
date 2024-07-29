@@ -1,0 +1,103 @@
+<configuration>
+    <!-- HiveServer2 Configuration -->
+    <property>
+        <name>hive.server2.thrift.port</name>
+        <value>10000</value>
+    </property>
+    <property>
+        <name>hive.server2.thrift.max.worker.threads</name>
+        <value>300</value> <!-- Adjust based on your requirements -->
+    </property>
+
+    <!-- Hive Metastore Configuration -->
+    <property>
+        <name>hive.metastore.uris</name>
+        <value>thrift://hive.metastore.tvr.local:9083</value>
+    </property>
+    <property>
+        <name>javax.jdo.option.ConnectionURL</name>
+        <value>jdbc:mysql://mysql.tvr.local:3306/metastore_db</value>
+    </property>
+    <property>
+        <name>javax.jdo.option.ConnectionDriverName</name>
+        <value>com.mysql.cj.jdbc.Driver</value> <!-- Updated to latest MySQL driver -->
+    </property>
+    <property>
+        <name>javax.jdo.option.ConnectionUserName</name>
+        <value>admin</value>
+    </property>
+    <property>
+        <name>javax.jdo.option.ConnectionPassword</name>
+        <value>admiN123Pass</value>
+    </property>
+
+    <!-- S3A Configuration for MinIO -->
+    <property>
+        <name>fs.s3a.endpoint</name>
+        <value>http://minio.tvr.local:9000</value>
+    </property>
+    <property>
+        <name>fs.s3a.aws.credentials.provider</name>
+        <value>org.apache.hadoop.fs.s3a.SimpleAWSCredentialsProvider</value>
+    </property>
+    <property>
+        <name>fs.s3a.access.key</name>
+        <value>minio_access_key</value>
+    </property>
+    <property>
+        <name>fs.s3a.secret.key</name>
+        <value>minio_secret_key</value>
+    </property>
+    <property>
+        <name>fs.s3a.path.style.access</name>
+        <value>true</value>
+    </property>
+    <property>
+        <name>fs.s3a.impl</name>
+        <value>org.apache.hadoop.fs.s3a.S3AFileSystem</value>
+    </property>
+    <property>
+        <name>fs.s3a.connection.ssl.enabled</name>
+        <value>false</value>
+    </property>
+
+    <!-- Warehouse Directory -->
+    <property>
+        <name>hive.metastore.warehouse.dir</name>
+        <value>s3a://hive/warehouse</value>
+    </property>
+
+    <!-- Optional Jars -->
+    <property>
+        <name>hive.aux.jars.path</name>
+        <value>/opt/hive/custom_lib/*</value>
+    </property>
+
+    <!-- Datanucleus Configuration -->
+    <property>
+        <name>datanucleus.autoCreateSchema</name>
+        <value>false</value>
+    </property>
+    <property>
+        <name>datanucleus.autoCreateTables</name>
+        <value>false</value>
+    </property>
+    <property>
+        <name>datanucleus.autoCreateIndexes</name>
+        <value>false</value>
+    </property>
+    <property>
+        <name>datanucleus.fixedDatastore</name>
+        <value>false</value>
+    </property>
+
+    <!-- Metastore Task Threads -->
+    <property>
+        <name>metastore.task.threads.always</name>
+        <value>org.apache.hadoop.hive.metastore.events.EventCleanerTask</value>
+    </property>
+    <property>
+        <name>metastore.expression.proxy</name>
+        <value>org.apache.hadoop.hive.metastore.DefaultPartitionExpressionProxy</value>
+    </property>
+</configuration>
