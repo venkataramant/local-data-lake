@@ -2,7 +2,7 @@
     <!-- Metastore URIs -->
     <property>
         <name>hive.metastore.uris</name>
-        <value>thrift://hive.metastore.tvr.local:9083</value>
+        <value>thrift://hive.metastore.my.local:9083</value>
     </property>
     <!-- Iceberg Configuration -->
     <property>
@@ -17,7 +17,7 @@
     <!-- JDBC Configuration for Metastore -->
     <property>
         <name>javax.jdo.option.ConnectionURL</name>
-        <value>jdbc:mysql://mysql.tvr.local:3306/metastore_db</value>
+        <value>jdbc:mysql://mysql.my.local:3306/metastore_db</value>
     </property>
     <property>
         <name>javax.jdo.option.ConnectionDriverName</name>

@@ -1,7 +1,7 @@
 version: '3.7'
 services:
   trino:
-    hostname: trino.tvr.local
+    hostname: trino.my.local
     image: 'trinodb/trino:351'
     ports:
       - '8086:8080'
@@ -10,7 +10,7 @@ services:
     networks:
       - trino-network
   minio:
-    hostname: minio.tvr.local
+    hostname: minio.my.local
     image: minio/minio:RELEASE.2024-05-10T01-41-38Z
     container_name: minio
     ports:

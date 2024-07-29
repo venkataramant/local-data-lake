@@ -12,11 +12,11 @@
     <!-- Hive Metastore Configuration -->
     <property>
         <name>hive.metastore.uris</name>
-        <value>thrift://hive.metastore.tvr.local:9083</value>
+        <value>thrift://hive.metastore.my.local:9083</value>
     </property>
     <property>
         <name>javax.jdo.option.ConnectionURL</name>
-        <value>jdbc:mysql://mysql.tvr.local:3306/metastore_db</value>
+        <value>jdbc:mysql://mysql.my.local:3306/metastore_db</value>
     </property>
     <property>
         <name>javax.jdo.option.ConnectionDriverName</name>
@@ -34,7 +34,7 @@
     <!-- S3A Configuration for MinIO -->
     <property>
         <name>fs.s3a.endpoint</name>
-        <value>http://minio.tvr.local:9000</value>
+        <value>http://minio.my.local:9000</value>
     </property>
     <property>
         <name>fs.s3a.aws.credentials.provider</name>

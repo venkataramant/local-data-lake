@@ -25,7 +25,7 @@
     </property>
     <property>
         <name>fs.s3a.endpoint</name>
-        <value>http://minio.tvr.local:9000</value>
+        <value>http://minio.my.local:9000</value>
     </property>
     <property>
     <name>fs.s3a.aws.credentials.provider</name>

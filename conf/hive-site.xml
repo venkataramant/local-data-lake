@@ -6,11 +6,11 @@
     </property>
     <property>
       <name>hive.server2.thrift.http.port</name>
-      <value>1001</value>
+      <value>10001</value>
     </property>
     <property>
       <name>hive.server2.webui.port</name>
-      <value>1002</value>
+      <value>10002</value>
     </property>
         <property>
         <name>hive.server2.thrift.bind.host</name>
@@ -28,7 +28,7 @@
     <!-- S3A Configuration for MinIO -->
     <property>
         <name>fs.s3a.endpoint</name>
-        <value>http://minio.tvr.local:9000</value>
+        <value>http://minio.my.local:9000</value>
     </property>
     <property>
         <name>fs.s3a.aws.credentials.provider</name>

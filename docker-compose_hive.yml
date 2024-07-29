@@ -2,7 +2,7 @@ version: '3.7'
 services:
 
   mysql_host:
-    hostname: mysql.tvr.local
+    hostname: mysql.my.local
     image: mysql:9.0.0
     ports:
       - 3306:3306
@@ -17,7 +17,7 @@ services:
       - mysql_data_dir:/var/lib/mysql
 
   hive-metastore:
-    hostname: hive.metastore.tvr.local
+    hostname: hive.metastore.my.local
     image: 'apache/hive:4.0.0'
 
     platform: linux/arm64 
@@ -37,10 +37,10 @@ services:
     environment:
       SERVICE_NAME: metastore
       DB_DRIVER: mysql
-      METASTORE_DB_HOSTNAME: mysql.tvr.local
+      METASTORE_DB_HOSTNAME: mysql.my.local
       HIVE_METASTORE_USER: admin
       HIVE_METASTORE_PASSWORD: admiN123Pass
-      HIVE_METASTORE_JDBC_URL: jdbc:mysql://mysql.tvr.local/metastore_db
+      HIVE_METASTORE_JDBC_URL: jdbc:mysql://mysql.my.local/metastore_db
       # HADOOP_CONF_DIR: /opt/hive/conf
       HIVE_METASTORE_WAREHOUSE_DIR: s3a://hive/warehouse
       HIVE_AUX_JARS_PATH: "/opt/hive/hive_aux_jars/"
@@ -57,23 +57,23 @@ services:
       - mysql_host
   hive-server2:
     image: apache/hive:4.0.0
-    hostname: hive-server2.metastore.tvr.local
+    hostname: hive-server2.metastore.my.local
     build: hive_build
     platform: linux/arm64 
     environment:
       SERVICE_NAME: hiveserver2
       DB_DRIVER: mysql
       # HADOOP_CONF_DIR: /opt/hive/conf
-      HIVE_METASTORE_URI: thrift://hive.metastore.tvr.local:9083
-      HIVE_METASTORE_JDBC_URL: jdbc:mysql://mysql.tvr.local/metastore_db
-      METASTORE_DB_HOSTNAME: mysql.tvr.local
+      HIVE_METASTORE_URI: thrift://hive.metastore.my.local:9083
+      HIVE_METASTORE_JDBC_URL: jdbc:mysql://mysql.my.local/metastore_db
+      METASTORE_DB_HOSTNAME: mysql.my.local
       HIVE_METASTORE_USER: admin
       HIVE_METASTORE_PASSWORD: admiN123Pass
       #AUX_CLASSPATH: /opt/hive/hive_aux_jars
       HIVE_AUX_JARS_PATH: "/opt/hive/hive_aux_jars/"
       VERBOSE: true
       VERBOSE_MODE: "--verbose"
-      SERVICE_OPTS: "-Dhive.metastore.uris=thrift://hive.metastore.tvr.local:9083 -Dhive.log.level=TRACE -Djavax.jdo.option.ConnectionDriverName=com.mysql.cj.jdbc.Driver -Djavax.jdo.option.ConnectionURL=jdbc:mysql://mysql.tvr.local/metastore_db -Djavax.jdo.option.ConnectionUserName=admin -Djavax.jdo.option.ConnectionPassword=admiN123Pass" 
+      SERVICE_OPTS: "-Dhive.metastore.uris=thrift://hive.metastore.my.local:9083 -Dhive.log.level=TRACE -Djavax.jdo.option.ConnectionDriverName=com.mysql.cj.jdbc.Driver -Djavax.jdo.option.ConnectionURL=jdbc:mysql://mysql.my.local/metastore_db -Djavax.jdo.option.ConnectionUserName=admin -Djavax.jdo.option.ConnectionPassword=admiN123Pass"
     depends_on:
       - hive-metastore
     ports:
