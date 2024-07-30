@@ -12,5 +12,5 @@ RUN apt-get install -y netcat net-tools curl wget vim
 #RUN chmod +x /entry_point_local.sh
 #RUN chown -R hive:hive  /entry_point_local.sh
 #ENTRYPOINT sh -c /entry_point_local.sh
-#USER hive
+USER hive
 EXPOSE 9083 10000 10001
