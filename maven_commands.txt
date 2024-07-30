@@ -1,3 +1,3 @@
-mvn dependency:copy-dependencies -DoutputDirectory=./lib/hive_aux_jars
-mvn dependency:copy-dependencies -DoutputDirectory=./lib/hive_client_jars
+mvn dependency:copy-dependencies -DoutputDirectory=./lib/hive_aux_jars -f poms/pom-client-jars.xml
+mvn dependency:copy-dependencies -DoutputDirectory=./lib/hive_client_jars -f poms/pom-client-jars.xml
 mvn dependency:tree

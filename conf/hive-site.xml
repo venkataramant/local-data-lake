@@ -5,14 +5,14 @@
         <value>10000</value>
     </property>
     <property>
-      <name>hive.server2.thrift.http.port</name>
-      <value>10001</value>
+        <name>hive.server2.thrift.http.port</name>
+        <value>10001</value>
     </property>
     <property>
-      <name>hive.server2.webui.port</name>
-      <value>10002</value>
+        <name>hive.server2.webui.port</name>
+        <value>10002</value>
     </property>
-        <property>
+    <property>
         <name>hive.server2.thrift.bind.host</name>
         <value>0.0.0.0</value>
     </property>
@@ -20,9 +20,17 @@
         <name>hive.server2.thrift.max.worker.threads</name>
         <value>300</value> <!-- Adjust based on your requirements -->
     </property>
-       <property>
+    <property>
         <name>hive.server2.thrift.max.worker.threads</name>
         <value>5</value> <!-- Adjust based on your requirements -->
+    </property>
+    <property>
+        <name>hive.server2.historic.operation.log.enabled</name>
+        <value>true</value>
+    </property>
+    <property>
+        <name>hive.server2.webui.max.historic.queries</name>
+        <value>5</value>
     </property>
 
     <!-- S3A Configuration for MinIO -->
@@ -60,28 +68,23 @@
         <name>hive.metastore.warehouse.dir</name>
         <value>s3a://hive/warehouse</value>
     </property>
-<property>
-    <name>hive.aux.jars.path</name>
-    <value>/opt/hive/hive_aux_jars/*</value>
-</property>
-
-<property>
-        <name>hive.aux.jars.path2</name>
-        <value>/opt/hive/hive_aux_jars/annotations-2.26.21.jar,/opt/hive/hive_aux_jars/metrics-spi-2.26.21.jar,/opt/hive/hive_aux_jars/apache-client-2.26.21.jar,/opt/hive/hive_aux_jars/mysql-connector-j-9.0.0.jar,/opt/hive/hive_aux_jars/arns-2.26.21.jar,/opt/hive/hive_aux_jars/netty-buffer-4.1.111.Final.jar,/opt/hive/hive_aux_jars/auth-2.26.21.jar,/opt/hive/hive_aux_jars/netty-codec-4.1.111.Final.jar,/opt/hive/hive_aux_jars/aws-core-2.26.21.jar,/opt/hive/hive_aux_jars/netty-codec-http-4.1.111.Final.jar,/opt/hive/hive_aux_jars/aws-query-protocol-2.26.21.jar,/opt/hive/hive_aux_jars/netty-codec-http2-4.1.111.Final.jar,/opt/hive/hive_aux_jars/aws-xml-protocol-2.26.21.jar,/opt/hive/hive_aux_jars/netty-common-4.1.111.Final.jar,/opt/hive/hive_aux_jars/bundle-2.23.19.jar,/opt/hive/hive_aux_jars/netty-handler-4.1.111.Final.jar,/opt/hive/hive_aux_jars/checksums-2.26.21.jar,/opt/hive/hive_aux_jars/netty-nio-client-2.26.21.jar,/opt/hive/hive_aux_jars/checksums-spi-2.26.21.jar,/opt/hive/hive_aux_jars/netty-resolver-4.1.111.Final.jar,/opt/hive/hive_aux_jars/commons-codec-1.15.jar,/opt/hive/hive_aux_jars/netty-transport-4.1.111.Final.jar,/opt/hive/hive_aux_jars/commons-logging-1.2.jar,/opt/hive/hive_aux_jars/,/opt/hive/hive_aux_jars/netty-transport-classes-epoll-4.1.111.Final.jar,/opt/hive/hive_aux_jars/crt-core-2.26.21.jar,/opt/hive/hive_aux_jars/netty-transport-native-unix-common-4.1.111.Final.jar,/opt/hive/hive_aux_jars/endpoints-spi-2.26.21.jar,/opt/hive/hive_aux_jars/profiles-2.26.21.jar,/opt/hive/hive_aux_jars/eventstream-1.0.1.jar,/opt/hive/hive_aux_jars/protocol-core-2.26.21.jar,/opt/hive/hive_aux_jars/hadoop-aws-3.4.0.jar,/opt/hive/hive_aux_jars/reactive-streams-1.0.4.jar,/opt/hive/hive_aux_jars/http-auth-2.26.21.jar,/opt/hive/hive_aux_jars/regions-2.26.21.jar,/opt/hive/hive_aux_jars/http-auth-aws-2.26.21.jar,/opt/hive/hive_aux_jars/retries-2.26.21.jar,/opt/hive/hive_aux_jars/http-auth-aws-eventstream-2.26.21.jar,/opt/hive/hive_aux_jars/retries-spi-2.26.21.jar,/opt/hive/hive_aux_jars/http-auth-spi-2.26.21.jar,/opt/hive/hive_aux_jars/s3-2.26.21.jar,/opt/hive/hive_aux_jars/http-client-spi-2.26.21.jar,/opt/hive/hive_aux_jars/sdk-core-2.26.21.jar,/opt/hive/hive_aux_jars/httpclient-4.5.13.jar,/opt/hive/hive_aux_jars/slf4j-api-1.7.30.jar,/opt/hive/hive_aux_jars/httpcore-4.4.13.jar,/opt/hive/hive_aux_jars/third-party-jackson-core-2.26.21.jar,/opt/hive/hive_aux_jars/identity-spi-2.26.21.jar,/opt/hive/hive_aux_jars/utils-2.26.21.jar,/opt/hive/hive_aux_jars/json-utils-2.26.21.jar,/opt/hive/hive_aux_jars/wildfly-openssl-1.1.3.Final.jar</value>
-    </property> 
     <property>
-  <name>hive.sql.extensions</name>
-  <value>org.apache.iceberg.mr.hive.HiveIcebergStorageHandler</value>
-</property>
-<property>
-  <name>iceberg.engine.hive.enabled</name>
-  <value>true</value>
-</property>
+        <name>hive.aux.jars.path</name>
+        <value>/opt/hive/hive_aux_jars/*</value>
+    </property>
+    <property>
+        <name>hive.sql.extensions</name>
+        <value>org.apache.iceberg.mr.hive.HiveIcebergStorageHandler</value>
+    </property>
+    <property>
+        <name>iceberg.engine.hive.enabled</name>
+        <value>true</value>
+    </property>
 
-<property>
-    <name>hive.execution.engine</name>
-    <value>tez</value> <!-- or tez if you are using tez -->
-</property>
+    <property>
+        <name>hive.execution.engine</name>
+        <value>tez</value> <!-- or tez if you are using tez -->
+    </property>
 
 
 </configuration>

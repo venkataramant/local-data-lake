@@ -12,7 +12,7 @@ services:
       MYSQL_PASSWORD: admiN123Pass
       MYSQL_DATABASE: metastore_db
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -26,7 +26,7 @@ services:
     hostname: hive.metastore.my.local
     image: 'apache/hive:4.0.0'
 
-    platform: linux/arm64 
+    platform: linux/arm64
     ports:
       - '9083:9083' # Metastore Thrift
     volumes:
@@ -39,11 +39,12 @@ services:
       #- ./lib/aws-java-sdk-bundle-1.12.761.jar:/opt/hive/lib/aws-java-sdk-bundle.jar
       #- ./lib/mysql-connector-j-9.0.0.jar:/opt/hive/lib/mysql-connector-j-9.0.0.jar
       - ./lib/hive_aux_jars/mysql-connector-j-9.0.0.jar:/opt/hive/lib/mysql-connector-j-9.0.0.jar
-      - ./lib/hive_aux_jars:/opt/hive/hive_aux_jars 
+      - ./lib/hive_aux_jars:/opt/hive/hive_aux_jars
     environment:
-      HTTPS_PROXY:
-      HTTP_PROXY:
-      http_proxy:
+      HTTPS_PROXY: ""
+      HTTP_PROXY: ""
+      https_proxy: ""
+      http_proxy: ""
       SERVICE_NAME: metastore
       DB_DRIVER: mysql
       METASTORE_DB_HOSTNAME: mysql.my.local
@@ -54,13 +55,13 @@ services:
       HIVE_METASTORE_WAREHOUSE_DIR: s3a://hive/warehouse
       HIVE_AUX_JARS_PATH: "/opt/hive/hive_aux_jars/"
       #AUX_CLASSPATH: "/opt/hive/hive_aux_jars/*"
-#      AUX_CLASSPATH: "/opt/hive/hive_aux_jars/identity-spi-2.26.21.jar,/opt/hive/hive_aux_jars/auth-2.26.21.jar,/opt/hive/hive_aux_jars/aws-java-sdk-bundle-1.12.762.jar,/opt/hive/hive_aux_jars/aws-java-sdk-s3-1.12.762.jar,/opt/hive/hive_aux_jars/hadoop-aws-3.4.0.jar,/opt/hive/hive_aux_jars/mysql-connector-j-9.0.0.jar,/opt/hive/hive_aux_jars/s3-2.20.83.jar"
+    #      AUX_CLASSPATH: "/opt/hive/hive_aux_jars/identity-spi-2.26.21.jar,/opt/hive/hive_aux_jars/auth-2.26.21.jar,/opt/hive/hive_aux_jars/aws-java-sdk-bundle-1.12.762.jar,/opt/hive/hive_aux_jars/aws-java-sdk-s3-1.12.762.jar,/opt/hive/hive_aux_jars/hadoop-aws-3.4.0.jar,/opt/hive/hive_aux_jars/mysql-connector-j-9.0.0.jar,/opt/hive/hive_aux_jars/s3-2.20.83.jar"
     networks:
       - trino-network
     deploy:
       resources:
         reservations:
-          cpus: 1.0
+          cpus: 0.5
           memory: 1280M
     depends_on:
       - mysql_host
@@ -68,11 +69,12 @@ services:
     image: apache/hive:4.0.0
     hostname: hive-server2.metastore.my.local
     build: hive_build
-    platform: linux/arm64 
+    platform: linux/arm64
     environment:
-      HTTPS_PROXY:
-      HTTP_PROXY:
-      http_proxy:
+      HTTPS_PROXY: ""
+      HTTP_PROXY: ""
+      https_proxy: ""
+      http_proxy: ""
       SERVICE_NAME: hiveserver2
       DB_DRIVER: mysql
       # HADOOP_CONF_DIR: /opt/hive/conf
@@ -96,28 +98,28 @@ services:
     deploy:
       resources:
         reservations:
-          cpus: 1.0
+          cpus: 2.0
           memory: 2048M
-  
+
     volumes:
-#      - hive-data:/opt/hive
+      #      - hive-data:/opt/hive
       - ./conf/hive-site.xml:/opt/hive/conf/hive-site.xml
       - ./conf/core-site.xml:/opt/hive/conf/core-site.xml
-      - ./conf/hive-log4j2.properties:/opt/hive/conf/hive-log4j2.properties 
+      - ./conf/hive-log4j2.properties:/opt/hive/conf/hive-log4j2.properties
       # - ./conf/metastore-site.xml:/opt/hive/conf/metastore-site.xml
       - ./lib/hive_aux_jars/mysql-connector-j-9.0.0.jar:/opt/hive/lib/mysql-connector-j-9.0.0.jar
       #- ./lib/hive_aux_jars/hadoop-aws-3.4.0.jar:/opt/hive/lib/hadoop-aws-3.4.0.jar
       #- ./lib/hive_aux_jars/aws-java-sdk-bundle-1.12.761.jar:/opt/hive/lib/aws-java-sdk-bundle-1.12.761.jar
       - ./lib/hive_aux_jars:/opt/hive/hive_aux_jars
       - ./hivesever2_logs:/tmp/hive
-       - ./hivesever2_logs2:/tmp/root
+      - ./hivesever2_logs2:/tmp/root
     networks:
       - trino-network
 
 volumes:
   minio-data:
     external: true
-#    driver: local
+  #    driver: local
   hive-data:
     external: true
   mysql_data_dir:
