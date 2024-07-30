@@ -1,0 +1,20 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.example</groupId>
+    <artifactId>hive-aws-deps</artifactId>
+    <version>1.0</version>
+    <properties>
+    <scala.version>2.13</scala.version>
+    <spark.version>3.5.0</spark.version>
+    <hadoop.version>3.3.6</hadoop.version>
+</properties>
+    <dependencies>
+        <dependency>
+            <groupId>org.apahce.hive</groupId>
+            <artifactId>hive-jdbc</artifactId>
+            <version>4.0.0</version>
+        </dependency>
+    </dependencies>
+</project>
