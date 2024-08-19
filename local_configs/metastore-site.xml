@@ -1,0 +1,46 @@
+<configuration>
+    <!-- Metastore URIs -->
+    <property>
+        <name>hive.metastore.uris</name>
+        <value>thrift://127.0.0.1:9083</value>
+    </property>
+    <!-- Iceberg Configuration -->
+    <property>
+        <name>hive.sql.extensions</name>
+        <value>org.apache.iceberg.mr.hive.HiveIcebergStorageHandler</value>
+    </property>
+    <property>
+        <name>iceberg.engine.hive.enabled</name>
+        <value>true</value>
+    </property>    
+
+    <!-- Datanucleus Configuration -->
+    <property>
+        <name>datanucleus.autoCreateSchema</name>
+        <value>false</value>
+    </property>
+    <property>
+        <name>datanucleus.autoCreateTables</name>
+        <value>false</value>
+    </property>
+    <property>
+        <name>datanucleus.autoCreateIndexes</name>
+        <value>false</value>
+    </property>
+    <property>
+        <name>datanucleus.fixedDatastore</name>
+        <value>false</value>
+    </property>
+
+    
+
+    <!-- Metastore Task Threads -->
+    <property>
+        <name>metastore.task.threads.always</name>
+        <value>org.apache.hadoop.hive.metastore.events.EventCleanerTask</value>
+    </property>
+    <property>
+        <name>metastore.expression.proxy</name>
+        <value>org.apache.hadoop.hive.metastore.DefaultPartitionExpressionProxy</value>
+    </property>
+</configuration>
