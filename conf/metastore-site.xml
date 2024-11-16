@@ -2,7 +2,7 @@
     <!-- Metastore URIs -->
     <property>
         <name>hive.metastore.uris</name>
-        <value>thrift://hive.metastore.my.local:9083</value>
+        <value>thrift://127.0.0.1:9083</value>
     </property>
     <!-- Iceberg Configuration -->
     <property>
@@ -12,25 +12,7 @@
     <property>
         <name>iceberg.engine.hive.enabled</name>
         <value>true</value>
-    </property>
-
-    <!-- JDBC Configuration for Metastore -->
-    <property>
-        <name>javax.jdo.option.ConnectionURL</name>
-        <value>jdbc:mysql://mysql.my.local:3306/metastore_db</value>
-    </property>
-    <property>
-        <name>javax.jdo.option.ConnectionDriverName</name>
-        <value>com.mysql.cj.jdbc.Driver</value>
-    </property>
-    <property>
-        <name>javax.jdo.option.ConnectionUserName</name>
-        <value>admin</value>
-    </property>
-    <property>
-        <name>javax.jdo.option.ConnectionPassword</name>
-        <value>admiN123Pass</value>
-    </property>
+    </property>    
 
     <!-- Datanucleus Configuration -->
     <property>

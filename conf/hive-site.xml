@@ -1,4 +1,22 @@
 <configuration>
+    <!-- JDBC Configuration for Metastore -->
+    <property>
+        <name>javax.jdo.option.ConnectionURL</name>
+        <value>jdbc:mysql://mysql.my.local:3306/metastore_db</value>
+    </property>
+    <property>
+        <name>javax.jdo.option.ConnectionDriverName</name>
+        <value>com.mysql.cj.jdbc.Driver</value>
+    </property>
+    <property>
+        <name>javax.jdo.option.ConnectionUserName</name>
+        <value>admin</value>
+    </property>
+    <property>
+        <name>javax.jdo.option.ConnectionPassword</name>
+        <value>admiN123Pass</value>
+    </property>
+    
     <!-- HiveServer2 Configuration -->
     <property>
         <name>hive.server2.thrift.port</name>
@@ -62,16 +80,49 @@
         <name>fs.s3a.connection.ssl.enabled</name>
         <value>false</value>
     </property>
+    <property>
+        <name>fs.defaultFS</name>
+        <value>s3a://minio.my.local:9000/hive</value>
+    </property>
+    <property>
+        <name>fs.s3a.impl</name>
+        <value>org.apache.hadoop.fs.s3a.S3AFileSystem</value>
+    </property>
+    <property>
+        <name>fs.s3a.connection.timeout</name>
+        <value>65</value>
+    </property>
+    <property>
+        <name>fs.s3a.connection.timeout</name>
+        <value>65</value>
+    </property>
+    <property>
+        <name>fs.s3a.connection.establish.timeout</name>
+        <value>66</value>
+    </property>
+    <property>
+        <name>fs.s3a.connection.maximum</name>
+        <value>60</value>
+    </property>
+    <property>
+        <name>fs.s3a.attempts.maximum</name>
+        <value>61</value>
+    </property>
 
+    
+
+
+
+    
     <!-- Warehouse Directory -->
     <property>
         <name>hive.metastore.warehouse.dir</name>
-        <value>s3a://hive/warehouse</value>
+        <value>s3a:///hive/warehouse</value>
     </property>
-    <property>
+<!--     <property>
         <name>hive.aux.jars.path</name>
         <value>/opt/hive/hive_aux_jars/*</value>
-    </property>
+    </property> -->
     <property>
         <name>hive.sql.extensions</name>
         <value>org.apache.iceberg.mr.hive.HiveIcebergStorageHandler</value>
