@@ -1,2 +1,7 @@
 lib*
 others
+.idea
+backup
+.DS_Store
+hivesever2_logs
+
