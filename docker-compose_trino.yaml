@@ -47,11 +47,6 @@ services:
 volumes:
   minio-data:
     external: true
-  #    driver: local
-  hive-data:
-    external: true
-  mysql_data_dir:
-    external: true
 
 networks:
   dataeng-network:
